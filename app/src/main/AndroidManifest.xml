@@ -1,20 +1,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.deezer.sdk.sample">
-
-
-    <!-- Obviously needed to download tracks and send request to the API -->
     <uses-permission android:name="android.permission.INTERNET"/>
-
-    <!-- Needed to know if network is available before trying to download a track -->
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-
-    <!-- Enable the device to keep the screen on when music is playing -->
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
-
-    <!-- Enable using the Visualizer -->
     <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS"/>
     <uses-permission android:name="android.permission.RECORD_AUDIO"/>
-
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
@@ -36,7 +26,7 @@
 
         <!-- User Home activity -->
         <activity
-            android:name=".HomeActivity"
+            android:name=".MainActivity"
             android:screenOrientation="portrait"/>
 
         <!-- User's playlists activity -->
@@ -94,6 +84,7 @@
         <activity
             android:name=".UserCustomTrackListActivity"
             android:screenOrientation="portrait"/>
+        <uses-library android:name="org.apache.http.legacy" android:required="false"/>
     </application>
 
 </manifest>

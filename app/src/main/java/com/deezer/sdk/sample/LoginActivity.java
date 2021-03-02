@@ -13,23 +13,9 @@ import com.deezer.sdk.network.connect.SessionStore;
 import com.deezer.sdk.network.connect.event.DialogListener;
 
 
-/**
- * Presents two buttons, one to log in with a deezer account and access a user's playlists, the
- * other to play deezer radios
- *
- * @author Deezer
- */
 public class LoginActivity extends BaseActivity {
 
-    /**
-     * Permissions requested on Deezer accounts.
-     * <p/>
-     * cf : http://developers.deezer.com/api/permissions
-     */
-    protected static final String[] PERMISSIONS = new String[]{
-            Permissions.BASIC_ACCESS, Permissions.OFFLINE_ACCESS
-    };
-
+    protected static final String[] PERMISSIONS = new String[]{ Permissions.BASIC_ACCESS, Permissions.OFFLINE_ACCESS };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -43,7 +29,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(final View v) {
                 Intent intent;
                 intent = new Intent(LoginActivity.this, VisualizerActivity.class);
-                intent.putExtra(VisualizerActivity.EXTRA_DISPLAY, VisualizerActivity.DISPLAY_FFT);
                 startActivity(intent);
             }
         });
@@ -54,8 +39,7 @@ public class LoginActivity extends BaseActivity {
             public void onClick(final View v) {
                 Intent intent;
                 intent = new Intent(LoginActivity.this, VisualizerActivity.class);
-                intent.putExtra(VisualizerActivity.EXTRA_DISPLAY,
-                        VisualizerActivity.DISPLAY_WAVEFORM);
+                intent.putExtra(VisualizerActivity.EXTRA_DISPLAY, VisualizerActivity.DISPLAY_WAVEFORM);
                 startActivity(intent);
             }
         });
@@ -66,7 +50,6 @@ public class LoginActivity extends BaseActivity {
             public void onClick(final View v) {
                 Intent intent;
                 intent = new Intent(LoginActivity.this, EqualizerActivity.class);
-
                 startActivity(intent);
             }
         });
@@ -93,7 +76,7 @@ public class LoginActivity extends BaseActivity {
 
         if (sessionStore.restore(mDeezerConnect, this)) {
             Toast.makeText(this, "Already logged in !", Toast.LENGTH_LONG).show();
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
 
@@ -119,7 +102,7 @@ public class LoginActivity extends BaseActivity {
             sessionStore.save(mDeezerConnect, LoginActivity.this);
 
             // Launch the Home activity
-            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
         }
 

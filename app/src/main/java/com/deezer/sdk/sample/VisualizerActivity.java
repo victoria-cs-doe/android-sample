@@ -6,7 +6,6 @@ import android.media.audiofx.Visualizer.OnDataCaptureListener;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
 
 import com.deezer.sdk.model.Track;
@@ -18,20 +17,13 @@ import com.deezer.sdk.player.RadioPlayer.RadioType;
 import com.deezer.sdk.player.event.RadioPlayerListener;
 import com.deezer.sdk.player.exception.TooManyPlayersExceptions;
 import com.deezer.sdk.player.networkcheck.WifiAndMobileNetworkStateChecker;
-import com.deezer.sdk.sample.ui.FFTView;
-import com.deezer.sdk.sample.ui.WaveformView;
 
 import java.util.Arrays;
 
 @TargetApi(Build.VERSION_CODES.GINGERBREAD)
-public class VisualizerActivity extends PlayerActivity
-        implements
-        RadioPlayerListener,
-        OnDataCaptureListener {
+public class VisualizerActivity extends PlayerActivity implements RadioPlayerListener, OnDataCaptureListener {
 
     private Visualizer mVisualizer;
-    private FFTView mFFTView;
-    private WaveformView mWFView;
 
     private static final long RADIO_SOUNDTRACKS = 30701L;
     private RadioPlayer mRadioPlayer;
@@ -39,7 +31,6 @@ public class VisualizerActivity extends PlayerActivity
     public static final String EXTRA_DISPLAY = "display";
     private int mDisplay = 0;
     public static final int DISPLAY_WAVEFORM = 1;
-    public static final int DISPLAY_FFT = 2;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -53,9 +44,6 @@ public class VisualizerActivity extends PlayerActivity
         // setup UI
         setContentView(R.layout.activity_visualizer);
         setupPlayerUI();
-        setupVisualizerUI();
-
-
         //build the player
         createPlayer();
     }
@@ -90,20 +78,6 @@ public class VisualizerActivity extends PlayerActivity
         setButtonEnabled(mButtonPlayerPause, false);
 
         setButtonEnabled(mButtonPlayerRepeat, false);
-    }
-
-    private void setupVisualizerUI() {
-        mFFTView = (FFTView) findViewById(R.id.fftView);
-        mWFView = (WaveformView) findViewById(R.id.wfView);
-
-        switch (mDisplay) {
-            case DISPLAY_WAVEFORM:
-                mWFView.setVisibility(View.VISIBLE);
-                break;
-            case DISPLAY_FFT:
-                mFFTView.setVisibility(View.VISIBLE);
-                break;
-        }
     }
 
     private void stopVisualizer() {
@@ -153,23 +127,9 @@ public class VisualizerActivity extends PlayerActivity
         int maxRate = Visualizer.getMaxCaptureRate();
         Log.i("Visualizer", "Max Capture rate : " + maxRate);
 
-
         mVisualizer = new Visualizer(sessionId);
 
-
-        int size;
-        switch (mDisplay) {
-            case DISPLAY_WAVEFORM:
-                size = Math.max(captureSizeRange[1] / 2, captureSizeRange[0]);
-                break;
-            case DISPLAY_FFT:
-                size = captureSizeRange[0]; // only keep a few ranges
-                break;
-            default:
-                size = (captureSizeRange[0] + captureSizeRange[1]) / 2;
-                break;
-        }
-
+        int size = (captureSizeRange[0] + captureSizeRange[1]) / 2;
         mVisualizer.setCaptureSize(size);
         mVisualizer.setDataCaptureListener(this, maxRate, true, true);
         mVisualizer.setEnabled(true);
@@ -198,26 +158,15 @@ public class VisualizerActivity extends PlayerActivity
                 Toast.LENGTH_LONG).show();
     }
 
-    //////////////////////////////////////////////////////////////////////////////////////
-    // Visualizer.OnDataCapturedListener
-    //////////////////////////////////////////////////////////////////////////////////////
-
 
     @Override
-    public void onFftDataCapture(final Visualizer visualizer, final byte[] fft,
-                                 final int samplingRate) {
-        //   Log.i("Visualizer", "Got fft : " + Arrays.toString(fft));
-        if (mDisplay == DISPLAY_FFT) {
-            mFFTView.setFFTData(fft);
-        }
+    public void onWaveFormDataCapture(final Visualizer visualizer, final byte[] waveform, final int samplingRate) {
+        // Log.i("Visualizer", "Got wf : " + Arrays.toString(waveform));
+
     }
 
     @Override
-    public void onWaveFormDataCapture(final Visualizer visualizer, final byte[] waveform,
-                                      final int samplingRate) {
-        // Log.i("Visualizer", "Got wf : " + Arrays.toString(waveform));
-        if (mDisplay == DISPLAY_WAVEFORM) {
-            mWFView.setWFData(waveform);
-        }
+    public void onFftDataCapture(Visualizer visualizer, byte[] bytes, int i) {
+
     }
 }

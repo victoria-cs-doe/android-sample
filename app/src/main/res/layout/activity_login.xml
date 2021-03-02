@@ -12,7 +12,10 @@
 		android:layout_alignParentRight="true"
 		android:layout_alignParentTop="true"
 		android:adjustViewBounds="true"
-		android:src="@drawable/app_title" />
+		android:src="@drawable/app_title"
+		android:layout_alignParentStart="true"
+		android:layout_alignParentEnd="true"
+		android:contentDescription="@string/empty" />
 
 	<Button
 		android:id="@+id/buttonLogin"
@@ -22,43 +25,6 @@
 		android:layout_centerHorizontal="true"
 		android:text="@string/login"
 		android:textAppearance="?android:attr/textAppearanceLarge" />
-
-	<LinearLayout
-		android:layout_width="match_parent"
-		android:layout_height="wrap_content"
-		android:layout_above="@+id/buttonRadio"
-		android:orientation="horizontal" >
-
-		<Button
-			android:id="@+id/buttonVisualizerFFT"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="@string/visualizer_fft" />
-
-		<Button
-			android:id="@+id/buttonVisualizerWaveform"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="@string/visualizer_wf" />
-
-		<Button
-			android:id="@+id/buttonEqualizer"
-			android:layout_width="0dp"
-			android:layout_height="wrap_content"
-			android:layout_weight="1"
-			android:text="@string/equalizer" />
-	</LinearLayout>
-
-	<Button
-		android:id="@+id/buttonRadio"
-		android:layout_width="wrap_content"
-		android:layout_height="wrap_content"
-		android:layout_alignParentBottom="true"
-		android:layout_centerHorizontal="true"
-		android:layout_marginBottom="22dp"
-		android:text="@string/unloggedRadios" />
 
 	<TextView
 		android:id="@+id/textVersion"

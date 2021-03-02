@@ -1,0 +1,2 @@
+com.deezer.sdk
+drawable _dz_dialog_close
